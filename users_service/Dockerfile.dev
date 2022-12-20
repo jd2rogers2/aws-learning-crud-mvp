@@ -1,0 +1,10 @@
+FROM node:19.3-alpine3.16
+WORKDIR /app
+
+COPY package.json package.json
+COPY index.js index.js
+
+RUN npm install
+
+EXPOSE 8000
+CMD npm run start

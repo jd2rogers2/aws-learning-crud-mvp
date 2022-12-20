@@ -1,0 +1,31 @@
+version: "3.9"
+# volumes:
+#   - users_data
+#   - widgets_data
+
+services:
+  # web_frontend:
+  #   context: web_frontend
+  #   ports: "3000:3000"
+
+  users_service:
+    build:
+      context: ./users_service
+      dockerfile: Dockerfile.dev
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./users_service:/app
+  # users_db:
+  #   image: postgres:15.1-bullseye
+
+  widgets_service:
+    build:
+      context: ./widgets_service
+      dockerfile: Dockerfile.dev
+    ports:
+      - "8001:8000"
+    volumes:
+      - ./widgets_service:/app
+  # widgets_db:
+  #   image: postgres:15.1-bullseye
