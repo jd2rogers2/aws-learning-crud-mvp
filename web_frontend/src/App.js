@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 
-import logo from './logo.svg';
 import './App.css';
 
 function App() {
@@ -10,15 +9,15 @@ function App() {
   useEffect(() => {
     const hitEndpoints = async () => {
       const [res1, res2] = await Promise.all([
-        fetch(process.env.REACT_APP_USERS_SERVICE_URL),
-        fetch(process.env.REACT_APP_SAMPLES_SERVICE_URL),
+        fetch(process.env.REACT_APP_USERS_API_URL),
+        fetch(process.env.REACT_APP_WIDGETS_API_URL),
       ]);
       const [newData1, newData2] = await Promise.all([
         res1.json(),
         res2.json(),
       ]);
-      setData1(newData1);
-      setData2(newData2);
+      setData1(newData1.text);
+      setData2(newData2.text);
     }
     hitEndpoints()
   }, [])
