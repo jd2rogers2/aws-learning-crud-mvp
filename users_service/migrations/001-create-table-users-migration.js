@@ -1,4 +1,4 @@
-exports.up = (pgm) => {
+export const up = (pgm) => {
     pgm.createTable('users', {
         id: 'id',
         email: { type: 'varchar(100)', notNull: true },
@@ -9,4 +9,6 @@ exports.up = (pgm) => {
             default: pgm.func('current_timestamp'),
         },
     });
+
+    pgm.addConstraint('users', 'unique_user_emails', { unique: ['email']});
 };

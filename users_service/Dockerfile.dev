@@ -5,11 +5,6 @@ COPY package.json package.json
 COPY package-lock.json package-lock.json
 RUN npm ci
 
-ARG DATABASE_URL
-ENV DATABASE_URL=${DATABASE_URL}
-COPY migrations migrations
-RUN DATABASE_URL=${DATABASE_URL} npm run migrate up
-
 COPY index.js index.js
 
 EXPOSE 8000

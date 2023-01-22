@@ -1,9 +1,12 @@
 version: "3.9"
-# volumes:
-#   - users_data
-#   - widgets_data
+volumes:
+  users_db:
+    external: true
+  widgets_db:
+    external: true
 
 services:
+# fe
   web_frontend:
     build:
       context: web_frontend
@@ -16,23 +19,31 @@ services:
     volumes:
       - ./web_frontend:/app
 
+# users
   users_service:
     build:
       context: ./users_service
       dockerfile: Dockerfile.dev
-      args:
-        DATABASE_URL: $DATABASE_URL
     ports:
       - "8000:8000"
     volumes:
       - ./users_service:/app
     environment:
       - WEB_FRONTEND_DOMAIN=http://localhost:3000
-      - DATABASE_URL={DATABASE_URL}
-      
-  # users_db:
-  #   image: postgres:15.1-bullseye
+      - DATABASE_URL=postgresql://postgres:postgres@users_db:5432/users
 
+  users_db:
+    image: postgres:15.1-bullseye
+    volumes:
+      - users_db:/var/lib/postgresql/data
+    ports:
+      - "5433:5432"
+    environment:
+      # - POSTGRES_USER=users
+      # - POSTGRES_PASSWORD=users
+      - POSTGRES_DB=users
+
+# widgets
   widgets_service:
     build:
       context: ./widgets_service
@@ -43,6 +54,15 @@ services:
       - ./widgets_service:/app
     environment:
       - WEB_FRONTEND_DOMAIN=http://localhost:3000
-      - DATABASE_URL=postgres://jamesrogers:@localhost:5432/aws_learning_crud_mvp_widgets
-  # widgets_db:
-  #   image: postgres:15.1-bullseye
+      - DATABASE_URL=postgresql://postgres:postgres@widgets_db:5432/widgets
+
+  widgets_db:
+    image: postgres:15.1-bullseye
+    volumes:
+      - widgets_db:/var/lib/postgresql/data
+    ports:
+      - "5434:5432"
+    environment:
+      # - POSTGRES_USER=widgets
+      # - POSTGRES_PASSWORD=widgets
+      - POSTGRES_DB=widgets
