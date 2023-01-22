@@ -13,7 +13,6 @@ services:
     environment:
       - REACT_APP_USERS_API_URL=http://localhost:8000
       - REACT_APP_WIDGETS_API_URL=http://localhost:8001
-      - WEB_FRONTEND_DOMAIN=http://localhost:3000
     volumes:
       - ./web_frontend:/app
 
@@ -21,12 +20,16 @@ services:
     build:
       context: ./users_service
       dockerfile: Dockerfile.dev
+      args:
+        DATABASE_URL: $DATABASE_URL
     ports:
       - "8000:8000"
     volumes:
       - ./users_service:/app
     environment:
       - WEB_FRONTEND_DOMAIN=http://localhost:3000
+      - DATABASE_URL={DATABASE_URL}
+      
   # users_db:
   #   image: postgres:15.1-bullseye
 
@@ -40,5 +43,6 @@ services:
       - ./widgets_service:/app
     environment:
       - WEB_FRONTEND_DOMAIN=http://localhost:3000
+      - DATABASE_URL=postgres://jamesrogers:@localhost:5432/aws_learning_crud_mvp_widgets
   # widgets_db:
   #   image: postgres:15.1-bullseye
