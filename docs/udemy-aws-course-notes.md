@@ -48,7 +48,11 @@
     - can be assigned policies at this level
 - policies
     - what the assigned (group or user) is allowed to do
-    - 
+    - json
+        - statement: [{}]
+            - effect - deny || allow
+            - action "service:ability"
+
 #### action items
 - create admin group with "admin access" policy
 
