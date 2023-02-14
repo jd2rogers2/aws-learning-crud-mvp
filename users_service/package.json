@@ -16,7 +16,6 @@
     "nodemon": "^2.0.20",
     "pg": "^8.8.0"
   },
-  "type": "module",
   "author": "@jd2rogers2",
   "license": "MIT"
 }

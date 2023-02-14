@@ -39,8 +39,6 @@ services:
     ports:
       - "5433:5432"
     environment:
-      # - POSTGRES_USER=users
-      # - POSTGRES_PASSWORD=users
       - POSTGRES_DB=users
 
 # widgets
@@ -63,6 +61,4 @@ services:
     ports:
       - "5434:5432"
     environment:
-      # - POSTGRES_USER=widgets
-      # - POSTGRES_PASSWORD=widgets
       - POSTGRES_DB=widgets

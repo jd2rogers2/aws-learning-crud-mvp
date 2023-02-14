@@ -1,4 +1,4 @@
-export const up = (pgm) => {
+const up = (pgm) => {
     pgm.createTable('widgets', {
         id: 'id',
         name: { type: 'varchar(100)', notNull: true },
@@ -10,4 +10,8 @@ export const up = (pgm) => {
             default: pgm.func('current_timestamp'),
         },
     });
+};
+
+module.exports = {
+    up,
 };

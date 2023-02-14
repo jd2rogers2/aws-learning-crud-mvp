@@ -1,4 +1,4 @@
-export const up = (pgm) => {
+const up = (pgm) => {
     pgm.createTable('users', {
         id: 'id',
         email: { type: 'varchar(100)', notNull: true },
@@ -11,4 +11,8 @@ export const up = (pgm) => {
     });
 
     pgm.addConstraint('users', 'unique_user_emails', { unique: ['email']});
+};
+
+module.exports = {
+    up,
 };

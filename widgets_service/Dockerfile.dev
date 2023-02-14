@@ -6,6 +6,7 @@ COPY package-lock.json package-lock.json
 RUN npm install
 
 COPY index.js index.js
+COPY migrations migrations
 
 EXPOSE 8000
 CMD ["npm", "run", "watch"]
