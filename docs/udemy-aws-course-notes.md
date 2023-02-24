@@ -42,7 +42,14 @@
 ### section 4 - IAM
 - global service
 - root user = do not use except to create admin user and other users
-- users (devs)
+- IAM users (devs)
+    - these still use the root user account_id or alias. so it feels like they're really sub-users
+    - create these accounts and then send the signin link to them
+    - they should set up MFA
+    - they should set a new pw on first sign in
+    - they configure their local terminal by creating an access key and secret
+    - can also use the cloud shell
+    - create multiple access keys for different integrations (i.e. sdk (app layer lib use))
 - groups
     - a set of users
     - can be assigned policies at this level
@@ -52,9 +59,14 @@
         - statement: [{}]
             - effect - deny || allow
             - action "service:ability"
+- roles
+    - like a user but for a service
+    - for when a service needs to perform an action
+    - that way we can allow or deny service integrations
 
 #### action items
-- create admin group with "admin access" policy
+- DONE - create admin group with "admin access" policy
+- reread "roles" section to review as it's a new concept
 
 
 
