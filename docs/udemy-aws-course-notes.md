@@ -63,6 +63,9 @@
     - like a user but for a service
     - for when a service needs to perform an action
     - that way we can allow or deny service integrations
+- best practices
+    - MFA
+    - rotate keys every X (90) days
 
 #### action items
 - DONE - create admin group with "admin access" policy
