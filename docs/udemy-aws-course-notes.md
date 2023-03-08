@@ -67,9 +67,45 @@
     - MFA
     - rotate keys every X (90) days
 
+### section 5 - EC2
+- he had me set up a "budget"
+    - i had to leave the NpC org to do this. orgs must own billing if you're part of one
+    - budgets are basically alerts for a billing threshold
+- EC2 = elastic compute cloud
+- it's infra as a service
+- it's made up of:
+    - instances = the hardware
+    - EBS - data volumes
+    - ELB - elastic load balancer
+    - ASG - auto scaling group (kube?)
+- lots of config options
+    - cloud (EBS || EFS) storage or local (on the EC2 instance)
+    - OS (mac|linux|win)
+    - CPU
+    - how much ram
+    - network card (?)
+    - firewall rules
+    - startup/bootstrap script "user data"
+        - only on first startup
+- t2.micro - is the type of instance we'll use most
+    - part of free tier
+    - 1GB ram
+    - 1 CPU
+    - only EBS storage
+    - med/low performance (this is enough)
+- creating my first instance
+    - mostly within browser, filling out form for config
+    - he provided a startup script
+    - instances have public and private IP addresses
+        - private is for within network
+    - AMI = amazon machine image
+        - like docker image but for spinning up instance
+        - select OS, etc.
+    - !! user data only runs on very first start, not on restart
+
 #### action items
 - DONE - create admin group with "admin access" policy
-- reread "roles" section to review as it's a new concept
+- DONE - reread "roles" section to review as it's a new concept
 
 
 
