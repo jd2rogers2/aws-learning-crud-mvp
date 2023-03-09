@@ -102,6 +102,29 @@
         - like docker image but for spinning up instance
         - select OS, etc.
     - !! user data only runs on very first start, not on restart
+- security groups
+    - kind of like "roles"
+    - perimssions for instance(s)
+    - everything denied by default
+    - can allow incoming IP, what port on instance is accessible
+    - can allow another security group access (used for intra service connections)
+    - use 0.0.0.0/0 to allow external connections, to a certain port, from anywhere
+    - live outside of your instance
+    - important ports to know:
+        - 22 - ssh connections (including SFTP (secure/ssh FTD))
+        - 21 - FTP
+        - 80 - http
+        - 443 - https
+    - !!! connection timeouts 100% due to security groups
+- ssh
+    - for secure shell connection to our instances
+    - use PUTTY for windows
+    - can use "EC2 instance connect"
+    - unix uses ssh command
+    - add security group to allow ssh on port 22
+    - mac cmd:
+        - chmod 0400 ~/path/to/key.pem
+        - ssh -i ~/path/to/key.pem ec2-user@[IPv4]
 
 #### action items
 - DONE - create admin group with "admin access" policy
