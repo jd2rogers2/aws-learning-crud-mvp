@@ -63,6 +63,7 @@
     - like a user but for a service
     - for when a service needs to perform an action
     - that way we can allow or deny service integrations
+    - can be assigned to individual service instances (i.e. an EC2 vm)
 - best practices
     - MFA
     - rotate keys every X (90) days
@@ -103,8 +104,7 @@
         - select OS, etc.
     - !! user data only runs on very first start, not on restart
 - security groups
-    - kind of like "roles"
-    - perimssions for instance(s)
+    - network perimssions for instance(s)
     - everything denied by default
     - can allow incoming IP, what port on instance is accessible
     - can allow another security group access (used for intra service connections)
