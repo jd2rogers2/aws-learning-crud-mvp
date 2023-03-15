@@ -125,6 +125,21 @@
     - mac cmd:
         - chmod 0400 ~/path/to/key.pem
         - ssh -i ~/path/to/key.pem ec2-user@[IPv4]
+- more configs
+    - so far, instances have been "on-demand"
+        - no commitment
+        - highest cost
+    - other options:
+        - reserved
+            - 1 & 3 year plans
+            - for long run time jobs (DB)
+            - cheaper but locks you in for longer
+        - spot instances - idk the diff between on-demand
+            - UNRELIABLE
+        - dedicated host - you get the whole server
+        - dedicated instance - you don't share hardware
+### section 6 - EC2 storage
+- 
 
 #### action items
 - DONE - create admin group with "admin access" policy
