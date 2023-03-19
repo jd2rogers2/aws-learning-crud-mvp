@@ -139,7 +139,20 @@
         - dedicated host - you get the whole server
         - dedicated instance - you don't share hardware
 ### section 6 - EC2 storage
-- 
+- storage options are:
+    - EBS volume
+        - elastic block store
+        - can only be mounted to 1 EC2 instance at a time
+        - bound to specific availability zone
+        - 30 GB/month
+        - connects to EC2 instance via network
+        - config GBs and I/O/s ahead of time
+        - EXAM topic
+            - can configure "delete on termination" property
+            - EC2 instance comes with a "root" EBS which has "delete on term." turned on
+        - CRUD with these volumes is very similar to EC2s
+        - using the EBS from EC2 is out of scope for this course?!
+
 
 #### action items
 - DONE - create admin group with "admin access" policy
