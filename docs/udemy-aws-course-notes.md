@@ -152,6 +152,10 @@
             - EC2 instance comes with a "root" EBS which has "delete on term." turned on
         - CRUD with these volumes is very similar to EC2s
         - using the EBS from EC2 is out of scope for this course?!
+        - can make snapshots to copy to a diff AZ or region, or to archive
+        - un archiving takes 24-72 to come back online
+        - config to keep EBS volume around for up to 1 year after deleting
+        - the snapshot is not the actual volume, you create volumes from the snapshot
 
 
 #### action items
