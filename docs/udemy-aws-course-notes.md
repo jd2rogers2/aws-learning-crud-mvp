@@ -139,23 +139,45 @@
         - dedicated host - you get the whole server
         - dedicated instance - you don't share hardware
 ### section 6 - EC2 storage
-- storage options are:
-    - EBS volume
-        - elastic block store
-        - can only be mounted to 1 EC2 instance at a time
-        - bound to specific availability zone
-        - 30 GB/month
-        - connects to EC2 instance via network
-        - config GBs and I/O/s ahead of time
-        - EXAM topic
-            - can configure "delete on termination" property
-            - EC2 instance comes with a "root" EBS which has "delete on term." turned on
-        - CRUD with these volumes is very similar to EC2s
-        - using the EBS from EC2 is out of scope for this course?!
-        - can make snapshots to copy to a diff AZ or region, or to archive
-        - un archiving takes 24-72 to come back online
-        - config to keep EBS volume around for up to 1 year after deleting
-        - the snapshot is not the actual volume, you create volumes from the snapshot
+- EBS volume
+    - elastic block store
+    - can only be mounted to 1 EC2 instance at a time
+    - bound to specific availability zone
+    - 30 GB/month
+    - connects to EC2 instance via network
+    - config GBs and I/O/s ahead of time
+    - gp2 is the most common volume type
+    - EXAM topic
+        - can configure "delete on termination" property
+        - EC2 instance comes with a "root" EBS which has "delete on term." turned on
+    - CRUD with these volumes is very similar to EC2s
+    - using the EBS from EC2 is out of scope for this course?!
+    - can make snapshots to copy to a diff AZ or region, or to archive
+    - un archiving takes 24-72 to come back online
+    - config to keep EBS volume around for up to 1 year after deleting
+    - the snapshot is not the actual volume, you create volumes from the snapshot
+- EC2 instance store
+    - better performance than EBS because it's a physical connection to your EC2 instance
+    - but it's ephemeral!
+- EFS
+    - shared network file system
+    - can be "mounted" to multiple EC2 instances
+    - and across multiple availability zones
+    - 3x more expensive than gp2
+    - EFS-IA (infrequent access)
+        - cold storage
+    - use a lifecycle policy to auto move unused files to cold storage
+- AMI overview (amzn machine image)
+    - yes like an image in docker
+    - using the "user data" bootup script from before, we can:
+        1. create an EC2 instance
+        2. create an image off of that
+        3. faster! start up of instances made with new image
+- EC2 image builder
+    - way to test AMIs
+    - creates test instance of the AMI
+    - can config to run regularly, when new depencies update, etc.
+    - lessons didn't actually run tests on an instance though :(
 
 
 #### action items
