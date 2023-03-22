@@ -178,6 +178,38 @@
     - creates test instance of the AMI
     - can config to run regularly, when new depencies update, etc.
     - lessons didn't actually run tests on an instance though :(
+- shared responsibility model for EC2 instance storage
+    - aws' responsibility
+        - infra
+        - replication process
+        - replacing faulty hardware
+        - employees cannot see data
+    - our responsibility
+        - backing up via snapshots, etc.
+        - data encryption
+        - responsible for all data on the hardware
+        - understanding ephemeralness of EC2
+- FSx
+    - 3rd party storage option
+    - shared file system
+    - we set up FSx and it accesses non-aws data center
+    - 3 types:
+        - FSx for windows file server
+        - FSx for Lustre (linux cluster)
+### ELB & ASG
+- Elastic load balancer & auto scaling groups
+- scalability = ability to grow vertically or horizontally, to handle more load
+- elasticity = automated scaling
+- 4 load balancer options
+    - application load balancer - layer 7
+        - http/https only
+    - network load balancer - layer 4
+        - tcp
+        - ultra high perf
+    - gateway load balancer - layer 3
+    - classic load balancer
+        - retired 2023
+        - layer 4, 7
 
 
 #### action items
