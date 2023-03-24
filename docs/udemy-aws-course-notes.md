@@ -198,15 +198,19 @@
         - FSx for Lustre (linux cluster)
 ### ELB & ASG
 - Elastic load balancer & auto scaling groups
+- MANAGED load balancer
+    - aws maintains availability for you
 - scalability = ability to grow vertically or horizontally, to handle more load
 - elasticity = automated scaling
 - 4 load balancer options
-    - application load balancer - layer 7
-        - http/https only
-    - network load balancer - layer 4
-        - tcp
+    - application load balancer
+        - http/https only - layer 7
+    - network load balancer
+        - tcp - layer 4
         - ultra high perf
-    - gateway load balancer - layer 3
+    - gateway load balancer
+        - IP - layer 3
+        - directs to 3rd party security service on your machine then to app layer
     - classic load balancer
         - retired 2023
         - layer 4, 7
