@@ -214,6 +214,19 @@
     - classic load balancer
         - retired 2023
         - layer 4, 7
+- ELB (application load balancer) impl in aws ui
+    - have existing EC2 instances
+    - put them in a security group
+        - that has the same port exposed via http, anywhere
+    - point new ELB at that group
+- ASG (auto scaling group) impl in aws ui
+    - no existing EC2s
+    - create ASG
+    - create launch template (same as EC2 form)
+    - connect to existing ELB
+    - define scaling config
+        - min (1), desired, max
+- ASG dashboard shows activity history of elastic scales
 
 
 #### action items
