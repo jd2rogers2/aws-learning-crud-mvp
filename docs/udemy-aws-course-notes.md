@@ -226,7 +226,18 @@
     - connect to existing ELB
     - define scaling config
         - min (1), desired, max
+    - deleted instances under the load balancer
+    - created ASG and selected existing load balancer
+    - terminate one instance and ASG brought up another automatically
 - ASG dashboard shows activity history of elastic scales
+- types of scaling
+    - manual
+    - dynamic
+        - simple/step scaling - when avg load hits a certain limit, add or remove instance
+        - target scaling - set desired load (40%) and will try to keep all instances around there
+        - scheduled scaling - you define when to bring on more instances (you know when users will be online)
+    - predicted scaling - AWS ML uses past activity to bring on more instances
+
 
 
 #### action items
