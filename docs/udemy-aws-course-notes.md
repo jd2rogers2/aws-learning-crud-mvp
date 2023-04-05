@@ -237,7 +237,37 @@
         - target scaling - set desired load (40%) and will try to keep all instances around there
         - scheduled scaling - you define when to bring on more instances (you know when users will be online)
     - predicted scaling - AWS ML uses past activity to bring on more instances
-
+### S3
+- "infinitely" scaling storage
+- static storage
+    - good for static site host
+- buckets with unique name across all regions
+- buckets are globally available but live only within 1 region
+- bucket names with alpha, num, and dash only
+- object and file storage
+- object store with keys for "location"
+    - no real folders but ui displays it that way
+- keys are really just unique strings, we use file structure path looking thing
+    - s3://bucket-name/prefix/filename.txt
+- objects have properties:
+    - metadata
+    - tags
+    - version ID (if enabled)
+- security for a bucket:
+    - user based - IAM user policies
+    - resource based
+        - bucket or object policies
+        - service roles (i.e. ec2 instance role)
+    - encrypt objects with encryption key
+    - policies
+        - similar to IAM
+        - they are json objects
+        - key/vals:
+            - resource[] = paths of bucket, directories, objects that the policy applies to
+                - ...folder/* for all objects in folder
+            - effect = allow | disallow
+            - action = read, write, etc. i.e. "GetObject"
+            - principal = who. * for everyone
 
 
 #### action items
