@@ -268,6 +268,9 @@
             - effect = allow | disallow
             - action = read, write, etc. i.e. "GetObject"
             - principal = who. * for everyone
+        - use the policy generator to create one
+        - there is an implicit deny
+            - all requests are denied unless there is an explicit allow
 
 
 #### action items
