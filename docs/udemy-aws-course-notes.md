@@ -271,6 +271,37 @@
         - use the policy generator to create one
         - there is an implicit deny
             - all requests are denied unless there is an explicit allow
+- host static page on S3
+    - toggle setting of ENTIRE bucket to 'enable static site hosting'
+    - put an index.html file in there
+- versioning
+    - recommended
+    - enable in "properties" tab
+    - preserves old objects
+    - objects prior to enable have version ID = null
+    - 'show versions' toggle to view old objects
+    - simple delete and it will auto roll back to previous version
+    - delete null version:
+        - and you can still see it in history
+        - replaced by a 'delete marker' row
+        - delete 'delete marker' to restore object
+- replication
+    - cross region replication and same region replication available
+    - versioning must be enabled on both
+    - copying is async
+    - CRR used for:
+        - compliance
+        - lower latency in other regions
+    - SRR used for:
+        - replication between prod and test envs
+    - impl:
+        - configure in origin bucket management tab
+        - create new replication rule
+        - can configure all or subset of objects
+        - specify destination bucket
+        - option to replicate existing objects using batch job
+        - verion ID of replica will match original
+
 
 
 #### action items
