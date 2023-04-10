@@ -1,11 +1,11 @@
 ### section 3 - cloud computing
 - deployment models
     - private cloud
-        - company owns servers
+        - company owns remote servers, managed by provider
     - public cloud
         - company rents servers
         - economies of scale
-            - we only need to pay for what we need
+            - we only pay for what we need
             - they provide cheaper product because they can afford scale
         - on demand
         - self service
@@ -17,6 +17,11 @@
             - storage
             - computers
         - i.e. EC2
+        - we handle:
+            - OS
+            - middleware
+            - runtime
+            - app + data
     - Platform as a Service
         - infra managed by them
         - we manage just app + data
@@ -37,7 +42,7 @@
         - iam
 - shared responsibility model
     - we're responsible for security of what we put in the cloud
-    - they're responsible for networking, hardware, etc. security
+    - they're responsible for security of network, hardware
 
 ### section 4 - IAM
 - global service
