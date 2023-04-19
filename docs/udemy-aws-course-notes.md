@@ -306,6 +306,201 @@
         - specify destination bucket
         - option to replicate existing objects using batch job
         - verion ID of replica will match original
+- storage classes
+    - set at the object level
+    - durability
+        - eleven 9s = 99.999...%
+        - you will lose 1 object per 10mil every thousand years
+        - same durability across all classes
+    - the classes:
+        - standard
+            - availability = 99.99% = 53m/y
+            - frequently accessed data, low latency, high output
+            - used for big data analytics, mobile + gaming, content distrib.
+            - no retrieval fee
+        - standard - infrequent access
+            - 99.9% availability
+            - disaster recovery, backups
+            - lower cost than standard
+            - retrieval fee per GB
+        - one zone - infrequent access
+            - only in one AZ, risk if warehouse is destroyed
+        - glacier
+            - min 90 day storage
+            - instant retrieval
+                - millisecond retrieval
+                - ideal for per quarter retrieval
+            - flexible retrieval
+                - retrieval options of 1-5 min, 3-5 hrs, 5-12 hrs 
+            - deep archive
+                - 12 hour standard retrieval
+                - 48 hour bulk retrieval
+                - min 180 days
+        - intelligent tiering
+            - monthly monitoring and auto-tiering fees
+            - moves between tiers automatically
+            - no retrieval charges
+- lifecycle rules
+    - moves objects between classes after [x] days
+    - management tab on the s3 bucket
+    - applied to whole bucket or filtered subset
+- encryption
+    - server side or client side
+    - both options available
+    - server side is always on
+- shared responsibility model
+    - they handle infra
+    - incl 3 AZs, so up to 2 AZs can fail
+    - we handle:
+        - versioning set up
+        - bucket policies set up
+        - replication set up
+        - logging, montioring
+        - storage class config
+        - client side encryption
+- snow family
+    - portable devices
+    - for edge computing
+        - preprocess
+        - ML
+    - for data migration into and out of AWS
+    - snowcone
+        - smallest
+        - migration
+            - 8 and 14 TB options
+        - compute
+            - smaller
+            - 2 cpus, 4 gb ram
+    - snowball edge
+        - medium, most cases under 10 TB
+        - migration
+            - pay per transfer job
+            - 1 flavor for storage optimized
+            - 1 flavor for compute optimized
+        - compute
+            - compute optimized
+                - 104 vcpus, 416 gb ram, optional gpu
+            - storage optimized
+                - 40 vcpus, 80 gb ram, 80 TB storage
+    - snowmobile
+        - migration
+            - literally a truck
+            - 100 PBs = 100k TBs
+            - 24/7 video surveillance
+    - OpsHub CLI for using snow devices
+- storage gateway
+    - hybrid cloud
+        - long migrations
+        - security or compliance requirements
+        - IT strategy (backup)
+    - your on prem uses AWS S3 software
+    - gateway is the physical bridge between prem <> cloud
+    - can use block (EBS, EC2), file (EFS), or object (S3, glacier)
+### Databases
+- managed DB services
+    - automated provisioning, OS patching
+    - point-in-time restore = continuous backups and restore to specific timestamp
+    - replicas for read action
+    - multi AZ
+    - easy vertical and horizontal scale
+- CANNOT ssh into db server
+- types
+    - relational
+        - RDS
+            - PG, MySql, MSSql
+        - Aurora
+            - more expensive (not in free tier)
+            - more performant (cloud optimized)
+            - can run PG or MySql
+    - NoSql
+- RDS impl
+    - it's own service listed in services
+    - easy config (makes some choices for you based on big picture selection)
+    - standard config (fully customized)
+        - free tier check box (or prod or dev)
+        - password connection is fine
+        - create a security access group
+    - once created, can take a snapshot
+    - can take snapshots
+        - can create a new/copy of this db via snap shot
+        - can share
+- RDS architecture
+    - main + read replicas pattern
+        - (including read replicas in other AZs)
+            - for performance, back up reasons
+            - at a cost of more data moving across network
+    - failover replica (in different AZ) pattern
+- ElastiCache
+    - memcache or redis
+- DynamoDB
+    - fully managed
+    - NoSql
+    - serverless
+    - more scalable than rdbms
+    - replication across 3 AZs available
+    - or make it global
+        - "active-active" replication = 2 way from region to region (no master, can write to any region and it will be replicated)
+    - autoscaling
+    - standard + IA (infrequent access) available
+    - impl
+        - don't need to create a DB, it's "serverless"
+        - create "table"
+        - has UI for CRUDing documents
+        - he didn't add any security checks
+        - but i do see a way to add an access control policy
+- DAX DynamoDB Accelerator
+    - fully managed, in memory cache
+- redshift
+    - columnar, not row based
+    - warehouse level
+    - for analytics, BI
+        - load data every hour, not real time
+    - not for OLTP
+    - sql interface
+    - MPP massive parallel query execution
+- EMR
+    - elastic map reduce
+    - hadoop cluster
+- athena
+    - serverless query service
+    - sql
+    - operates on S3
+- quicksight
+    - BI data viz dashboard
+    - integrates with RDS, aurora, athena, etc.
+- documentDb
+    - aws impl of mongo db (fork)
+- neptune
+    - fully managed graph db
+    - i.e. social networking, knowledge graphs (wikipedia = interconnected)
+- QLDB - quantum ledger db
+    - financial transactions
+    - immutable data
+    - used to review history of all changes made
+        - cryptographic hash computed to guarantee nothing has been modified
+        - journal for logging actions to db
+    - centralized, as in separate from other ledgers
+        - key difference with blockchain
+- managed blockchain
+    - multiple parties can execute without need for centralized authority
+    - joins public blockchains
+    - or scalable private network
+    - compatible with ethereum and hyperledger fabric
+- glue
+    - etl
+    - serverless
+    - compatible with S3, RDS, etc.
+
+## side notes
+- edge computing
+    - storage or compute
+    - happens at the site where data is stored or created
+    - so physical device is sent to location
+    - used for remote location, logistics (shipping trucks, boats), mining
+    - so hybrid cloud as it's not in the cloud until transferred
+- OLTP vs OLAP
+    - online analytical processing
+    - online transaction processing
 
 
 
