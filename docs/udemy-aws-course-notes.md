@@ -490,6 +490,13 @@
     - etl
     - serverless
     - compatible with S3, RDS, etc.
+- DMS = db migration service
+    - one db service to another
+    - source db stays available
+    - supports heterogeneous migrations
+        - from 1 type of db to another
+### other compute servives
+- 
 
 ## side notes
 - edge computing
