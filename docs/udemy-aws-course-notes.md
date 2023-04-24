@@ -496,7 +496,36 @@
     - supports heterogeneous migrations
         - from 1 type of db to another
 ### other compute servives
-- 
+- ECS = elastic container service
+    - running docker containers in AWS
+    - manages start and stop of containers
+    - built on EC2
+    - can integrate with App Load Balancer
+- Fargate
+    - more docker in AWS
+    - serverless
+    - you don't provision infra
+- ECR = elastic container registry
+    - private image store
+- Lambda
+    - EC2 has:
+        - limited CPU, RAM
+        - continuously running
+        - complex scaling (manual, detailed rules, takes time)
+    - virtual functions
+    - run on demand
+    - limited by time - short executions
+    - scaling is automated
+    - pay per req.s and compute time
+        - 1st 1MM requests free. $.20/MM after
+        - 1st 400,000GBs free of RAM (processing)
+            - (400k seconds of 1 GB use)
+            - $1 per 600k GBs
+    - can only run docker images based of lambda image
+        - so ECS or fargate are preferred for docker containers
+    - good for cron jobs
+
+
 
 ## side notes
 - edge computing
@@ -508,6 +537,9 @@
 - OLTP vs OLAP
     - online analytical processing
     - online transaction processing
+- "serverless"
+    - obvi still servers, we just don't manage them
+    - i.e. S3, dynamoDb, fargate, lambda
 
 
 
