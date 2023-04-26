@@ -524,6 +524,12 @@
     - can only run docker images based of lambda image
         - so ECS or fargate are preferred for docker containers
     - good for cron jobs
+    - impl:
+        - create new function btn
+        - can configure runtime env (python, go, node, etc.)
+        - browser IDE for writing code
+        - test button to pass in event json
+        - call or error is written to logs
 
 
 
