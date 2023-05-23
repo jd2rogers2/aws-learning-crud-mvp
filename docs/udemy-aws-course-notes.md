@@ -62,8 +62,9 @@
     - what the assigned (group or user) is allowed to do
     - json
         - statement: [{}]
-            - effect - deny || allow
-            - action "service:ability"
+            - effect - "deny" || "allow"
+            - service - which AWS product
+            - action/ability i.e. GetUser
 - roles
     - like a user but for a service
     - for when a service needs to perform an action
@@ -81,7 +82,8 @@
 - it's infra as a service
 - it's made up of:
     - instances = the hardware
-    - EBS - data volumes
+    - EBS - elastic block store
+        - data volumes
     - ELB - elastic load balancer
     - ASG - auto scaling group (kube?)
 - lots of config options
@@ -521,7 +523,7 @@
         - 1st 400,000GBs free of RAM (processing)
             - (400k seconds of 1 GB use)
             - $1 per 600k GBs
-    - can only run docker images based of lambda image
+    - can only run docker images based off lambda image
         - so ECS or fargate are preferred for docker containers
     - good for cron jobs
     - impl:
@@ -531,6 +533,9 @@
         - test button to pass in event json
         - call or error is written to logs
 
+
+### practice exam corrections
+- 
 
 
 ## side notes
