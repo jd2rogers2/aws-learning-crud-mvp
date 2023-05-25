@@ -535,7 +535,10 @@
 
 
 ### practice exam corrections
-- 
+- CloudFront = CDN
+- CloudWatch = logs for any service basically
+    - SNS "simple notification services" - notifications for cloudwatch
+- CloudTrail = big brother for aws users. tracks actions through UI, sdk, cli
 
 
 ## side notes
