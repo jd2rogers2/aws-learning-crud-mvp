@@ -1,3 +1,4 @@
+##### Udemy course
 ### section 3 - cloud computing
 - deployment models
     - private cloud
@@ -532,16 +533,46 @@
         - browser IDE for writing code
         - test button to pass in event json
         - call or error is written to logs
+### section 15 - vpc
+- vitrual private cloud
+    - linked to a specific region
+    - subnet = network partition
+        - public
+            - use an IGW (internet gateway) plus a route to make a subnet public
+        - or private
+            - NAT gateway = aws managed, allows private subnet to access internet
+            - or use a NAT instance (self managed)
+        - tied to AZ
+        - route table = defines access to subnets for public users (internet) and between subnets
+- 1 is created by default when account is made
+- elastic IPs
+    - persist across EC2 shutdowns and restarts
+    - pay when unused (because AWS has to keep the registered)
+- EC2 private IPs are fixed across restarts
+- VPC flow logs
+    - all IP traffic for VPC
+    - catches for all services: elasicache, ELB, aurora, RDS, etc.
+    - need to configure and send to CloudWatch logs or S3 bucket
+- VPC peering
+    - makes A and B VPCs behave as if they were in the same network
+    - IPs cannot overlap
+    - not transitive (A <-> B <-> C, but A and C can't talk)
+- VPC endpoints
+    - connecting from private VPC EC2 instance to internal service
+    - creates a gateway for S3 or DynamoDB
+    - or creates an "interface" for any other service
+- Client VPN = install and make your computer act as if it's in VPC
 
 
-### practice exam corrections
+
+### udemy practice exam corrections
 - CloudFront = CDN
 - CloudWatch = logs for any service basically
     - SNS "simple notification services" - notifications for cloudwatch
 - CloudTrail = big brother for aws users. tracks actions through UI, sdk, cli
 
 
-## side notes
+### solo research notes notes
 - edge computing
     - storage or compute
     - happens at the site where data is stored or created
@@ -554,19 +585,15 @@
 - "serverless"
     - obvi still servers, we just don't manage them
     - i.e. S3, dynamoDb, fargate, lambda
+- ACL = access control list
+    - firewall w/ list of 
 
 
 
 #### action items
 - DONE - create admin group with "admin access" policy
 - DONE - reread "roles" section to review as it's a new concept
-
-
-
 - TODO - learn about VPC more!!!!
-
-
-
 
 
 
