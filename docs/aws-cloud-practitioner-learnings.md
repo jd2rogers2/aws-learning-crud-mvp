@@ -570,9 +570,36 @@
 - CloudWatch = logs for any service basically
     - SNS "simple notification services" - notifications for cloudwatch
 - CloudTrail = big brother for aws users. tracks actions through UI, sdk, cli
+- Trusted Advisor can help identiy EC2 underutilization
+    - NOT Cost Explorer = mostly just for viewing actual costs
+- VPC has multiple AZs in 1 region
+    - NOT multiple edge locations
+    - Edge Locations are data centers for specific services that would benefit from being physically nearby
+        - cloud front (CDN)
+        - web app firewall - don't bother send req far away if not auth'd
+        - route 53, know where to send things directly early on saves searching
+- monitoring EC2 instance utilization is in CloudWatch
+    - NOT in systems manager, which is where you patch, etc. EC2 instances
+- AWS Artifact - compliance related info
+- AWS patches DB software for you
+- Dedicated host - server fully dedicated to your EC2 instance
+- SNS - simple notification service
+    - pub/sub
+    - SMS, email, push notifications
+- SQS - simple queue service
+    - it's a queue
+- benefit of RDS - simplifies admin tasks
+    - set up, patching, backups
+- Code Commit - source code versioning
+- if IT will manage DB use EC2
+- RedShift = analyze structured and unstructured data
+    - analytics!!
+- EC2 is not managed! you must patch software
+    - it's infra as a service
+- Fargate = like lambda (serverless) but for container not functions
+    - ECS (container) or EKS (kube) under the hood
 
-
-### solo research notes notes
+### solo research notes
 - edge computing
     - storage or compute
     - happens at the site where data is stored or created
@@ -586,14 +613,31 @@
     - obvi still servers, we just don't manage them
     - i.e. S3, dynamoDb, fargate, lambda
 - ACL = access control list
-    - firewall w/ list of 
+    - firewall w/ list of IPs
 
+
+
+#### cloud practitioner exam intro webinar
+- test certifies:
+    - general global infra
+    - cloud architect principles
+    - $ value of cloud
+    - key services and use cases
+    - security, compliance, shared sec. model
+    - billing
+
+
+TODOs:
+- managed = we patch OS of EC2 after startup
+- spot instances
+- support plans
 
 
 #### action items
 - DONE - create admin group with "admin access" policy
 - DONE - reread "roles" section to review as it's a new concept
-- TODO - learn about VPC more!!!!
+- DONE - learn about VPC more!!!!
+- !!!!! pearson vue has practice exams, take one
 
 
 
