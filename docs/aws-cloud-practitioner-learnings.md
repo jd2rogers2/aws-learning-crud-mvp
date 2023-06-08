@@ -598,6 +598,24 @@
     - it's infra as a service
 - Fargate = like lambda (serverless) but for container not functions
     - ECS (container) or EKS (kube) under the hood
+- Aurora = SQL db
+    - built on top of RDS
+    - better reliability, storage, etc. less user mgmt
+    - but more expensive
+- Athena = SQL queries for S3
+- Macie - ML optimized security and privacy protection tool for analyzing S3
+- CloudFormation = infra as code
+- CDK
+    - also IaC
+    - built on top of CloudFormation
+- AWS mgmt console = aws.com
+- Direct Connect = private network connection from on-prem -> aws
+    - for hybrid solutions
+    - just the connection
+- AWS Outposts = bringing AWS services to on-prem
+    - including vpc
+    - "seemless hybrid xp"
+
 
 ### solo research notes
 - edge computing
