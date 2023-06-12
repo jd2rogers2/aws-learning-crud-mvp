@@ -615,6 +615,28 @@
 - AWS Outposts = bringing AWS services to on-prem
     - including vpc
     - "seemless hybrid xp"
+## test 2
+- AWS storage gateway - connects on premise workloads to AWS storage
+    - migrations
+- AZ = one or more physical data centers
+    - region = us-east-1 so AZs are below that, unnamed
+- EC2 price savings:
+    - on demand - most expensive, standard EC2 purchase
+    - spot instances - "give me the unused processing power"
+    - reserved instances - long term, upfront
+    - savings plan - also long commitment = cheaper
+- pay-as-you-go pricing = trade upfront expenses for variable on-demand expenses
+- aws personal health dash = health status of aws services
+- credentials:
+    - "access key id" = id
+    - "secret access key" = pw
+        - not "private key"
+- AWS glue = ETL
+- redshift = the data warehouse
+- quicksight = BI dashboards
+- WAF vs security group
+    - security group is protecting just instance
+    - WAF is in front of entire VPC
 
 
 ### solo research notes
@@ -632,6 +654,10 @@
     - i.e. S3, dynamoDb, fargate, lambda
 - ACL = access control list
     - firewall w/ list of IPs
+- data lake
+    - raw unstructured data
+    - indefinite storage
+- data warehouse - processed data ready for analysis
 
 
 
