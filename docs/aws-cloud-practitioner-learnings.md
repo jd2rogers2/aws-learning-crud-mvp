@@ -637,6 +637,24 @@
 - WAF vs security group
     - security group is protecting just instance
     - WAF is in front of entire VPC
+- Trusted Advisor flags services security groups that allow unrestricted access
+- snowball edge has EC2 capabilities
+- Amazon Inspector is an automated security assessment service (for EC2 instances)
+- AWS Config - tracks service configuration changes
+- AWS Total Cost of Ownership (TCO) calculator = compare pricing to on premise
+- AWS Beanstalk = hosting, deploying, and scaling webapp services
+    - automated config, but we can still control
+- AWS Shield - managed DDoS protection
+- shared responsiblity model:
+    - customer responsible for security "IN" the cloud
+        - customer data, IAM, applications
+        - OS, network, firewall configs
+        - encryption at client, network, and server
+    - AWS responsible for security "OF" the cloud
+        - their hardware and THEIR software
+    - we need to update OS's
+- OpsWorks = manage Puppet+Chef (IaC to config instance management)
+
 
 
 ### solo research notes
