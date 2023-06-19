@@ -86,7 +86,7 @@
     - EBS - elastic block store
         - data volumes
     - ELB - elastic load balancer
-    - ASG - auto scaling group (kube?)
+    - ASG - auto scaling group
 - lots of config options
     - cloud (EBS || EFS) storage or local (on the EC2 instance)
     - OS (mac|linux|win)
@@ -592,8 +592,6 @@
     - set up, patching, backups
 - Code Commit - source code versioning
 - if IT will manage DB use EC2
-- RedShift = analyze structured and unstructured data
-    - analytics!!
 - EC2 is not managed! you must patch software
     - it's infra as a service
 - Fargate = like lambda (serverless) but for container not functions
@@ -603,11 +601,12 @@
     - better reliability, storage, etc. less user mgmt
     - but more expensive
 - Athena = SQL queries for S3
-- Macie - ML optimized security and privacy protection tool for analyzing S3
+- Macie - ML optimized security and privacy detection/protection tool for analyzing S3
 - CloudFormation = infra as code
 - CDK
     - also IaC
     - built on top of CloudFormation
+    - use any coding language instead of yaml??
 - AWS mgmt console = aws.com
 - Direct Connect = private network connection from on-prem -> aws
     - for hybrid solutions
@@ -665,8 +664,8 @@
     - used for remote location, logistics (shipping trucks, boats), mining
     - so hybrid cloud as it's not in the cloud until transferred
 - OLTP vs OLAP
-    - online analytical processing
     - online transaction processing
+    - online analytical processing
 - "serverless"
     - obvi still servers, we just don't manage them
     - i.e. S3, dynamoDb, fargate, lambda
