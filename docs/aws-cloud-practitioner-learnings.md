@@ -654,7 +654,59 @@
     - we need to update OS's
 - OpsWorks = manage Puppet+Chef (IaC to config instance management)
 
+## test 3
+- network ACL
+    - allow or deny rules
+    - applies to all instances in subnet
+- vs security group
+    - only allow rules
+    - group level only
+- pay ahead services
+    - EC2, DynamoDB, ElastiCache, RDS, and RedShift
+- "rightsizing" = choosing right machine image for workload
+    - cost optimization strategy
+- support plans
+    - developer
+        - not for production
+    - business
+        - 24/7 tech support phone, web, chat
+    - enterprise (and enterprise on-ramp)
+        - 24/7 tech support phone, web, chat
+        - technical acct mngr
+- aws config = document, and track changes, to set up + relationships of aws services
+- aws IAM ID center (SSO successor)
+    - not Oauth
+    - central mgmt of multiple aws IAM accounts
+- "key pairs" = for ssh-ing into EC2 instance
+- "access keys" = for programatic requests
+- aws Guard Duty
+    - continuous threat detection service
+    - monitors accounts and workloads
+- aws trusted advisor - automated checks on your resources for sec, cost opt, etc.
+- aws inspector - automated vulnerability checks on EC2 instances
+- aws macie - ML vulnerability checker on S3 data
+- aws shield - ddos attack prevention
+- aws cognito = oauth
+- gateways:
+    - routing
+    - internet gateway:
+        - 2 way VPC to internet connection
+        - public vpc
+    - NAT gateway:
+        - 1 way VPC has access to internet
+        - private VPC
+        - keeps internal IPs private
+    - transit gateway
+        - connects on-prem or vpc to internet
+    - storage gateway
+        - not really the same kind of gateway
+        - cloud backup/link to on-prem data w/ bonuses
+    - virtual private gateway
+        - ?????
 
+
+
+@ #31
 
 ### solo research notes
 - edge computing
