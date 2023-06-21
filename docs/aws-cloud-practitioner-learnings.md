@@ -454,6 +454,7 @@
 - DAX DynamoDB Accelerator
     - fully managed, in memory cache
 - redshift
+    - data lake = unformatted/raw data
     - columnar, not row based
     - warehouse level
     - for analytics, BI
@@ -498,7 +499,7 @@
     - source db stays available
     - supports heterogeneous migrations
         - from 1 type of db to another
-### other compute servives
+### other compute services
 - ECS = elastic container service
     - running docker containers in AWS
     - manages start and stop of containers
@@ -566,6 +567,7 @@
 
 
 ### udemy practice exam corrections
+## test 1
 - CloudFront = CDN
 - CloudWatch = logs for any service basically
     - SNS "simple notification services" - notifications for cloudwatch
@@ -591,7 +593,7 @@
 - benefit of RDS - simplifies admin tasks
     - set up, patching, backups
 - Code Commit - source code versioning
-- if IT will manage DB use EC2
+- if IT will manage DB, use EC2
 - EC2 is not managed! you must patch software
     - it's infra as a service
 - Fargate = like lambda (serverless) but for container not functions
@@ -606,7 +608,7 @@
 - CDK
     - also IaC
     - built on top of CloudFormation
-    - use any coding language instead of yaml??
+    - define infra via any coding language
 - AWS mgmt console = aws.com
 - Direct Connect = private network connection from on-prem -> aws
     - for hybrid solutions
@@ -614,6 +616,7 @@
 - AWS Outposts = bringing AWS services to on-prem
     - including vpc
     - "seemless hybrid xp"
+
 ## test 2
 - AWS storage gateway - connects on premise workloads to AWS storage
     - migrations
@@ -688,7 +691,7 @@
 - aws shield - ddos attack prevention
 - aws cognito = oauth
 - gateways:
-    - routing
+    - routing, networking
     - internet gateway:
         - 2 way VPC to internet connection
         - public vpc
@@ -701,12 +704,18 @@
     - storage gateway
         - not really the same kind of gateway
         - cloud backup/link to on-prem data w/ bonuses
-    - virtual private gateway
-        - ?????
-
-
+    - site-to-site vpn
+        - 2 components needed
+        1. virtual private gateway
+            - aws side
+            - connection VPC to on-prem network, via internet (public but encrypted)
+            - compared to direct connect which is a private hard wired connection
+        2. customer gateway
+            - on-prem side
 
 @ #31
+
+
 
 ### solo research notes
 - edge computing
