@@ -676,7 +676,7 @@
     - enterprise (and enterprise on-ramp)
         - 24/7 tech support phone, web, chat
         - technical acct mngr
-- aws config = document, and track changes, to set up + relationships of aws services
+- aws config = document, and track, changes to set up + relationships of aws services
 - aws IAM ID center (SSO successor)
     - not Oauth
     - central mgmt of multiple aws IAM accounts
@@ -700,7 +700,9 @@
         - private VPC
         - keeps internal IPs private
     - transit gateway
-        - connects on-prem or vpc to internet
+        - single connection point for multiple networks
+        - connect multiple vpcs or on-prem centers via 1 central node
+        - scalable across regions
     - storage gateway
         - not really the same kind of gateway
         - cloud backup/link to on-prem data w/ bonuses
