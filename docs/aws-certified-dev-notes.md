@@ -1,4 +1,33 @@
-### feecodecamp youtube
+### udemy course
+
+## EC2 storage
+# EBS
+- network drive
+- 30GB free per month
+- only attaches to 1 EC2 instance at a time
+- only available in 1 AZ
+- easy to move it to other instance (on deploy)
+- multi attach = to attach to multiple EC2 instance in diff AZs
+# EFS
+- a network file system
+- accessible from multiple EC2 instances across AZs
+# Instance store
+- a hard-drive on the physical server
+- your EC2 instance will be built on a specific type of server
+- good for improved performance, cacheing
+- ephemeral, would need a copy/backup system
+
+
+
+### practice tests
+## 1 (19 july)
+- things to research:
+    - tooling (code deploy)
+    - dynamodb parallel something
+
+
+
+### feecodecamp youtube (eh)
 
 ## elastic beanstalk
 - "not for production use" per aws
