@@ -28,15 +28,20 @@
     - IAM - user pools, identity pools
     - cloudwatch, detailed monitoring, cloudwatch Events, alarms
     - AWS CLI put-metric-data
-    - api gateway caching (maybe compile all caching)
+    - api gateway caching (maybe compile all caching), mapping templates (xml > json)
     - lambda - sqs event source, cloud watch event source, dep pkg (zip files)
     - event bridge
     - code deploy, appspec listeners/lifecycle hooks
-    - dynamodb - streams, parallel scans, throughput
-    - ecs - ec2 launch types, vocab task vs pod etc., HOST_PORT:CONTAINER_PORT mappings (0 for host will be automatically handled), task definitions
+    - dynamodb - streams, parallel scans, throughput, session feature, operations
+    - ecs - launch types (ec2, fargate), vocab task vs pod etc., HOST_PORT:CONTAINER_PORT mappings (0 for host will be automatically handled), task definitions
     - s3 hive compatible
     - beanstalk - source bundle
     - x-ray
+    - sqs - config (long polling), system arch, 
+    - certificate manager = for issuing SSL/TLS certificates
+        - vs kms, secrets mngr, priv cert auth
+    - rds proxy = LB sorta for RDS
+    - step functions
 - SAML = secure assertion markup language
     - xml auth
 - DDL = data def language (subset of SQL, create table etc.)
