@@ -20,13 +20,12 @@
 ## CICD
 - summary:
     - Code Commit = version control
-    - Code Pipeline = pipline orchestration
+    - Code Pipeline = pipeline orchestration
     - Code Build = build and test
     - Code Deploy = deploying to EC2
     - Code Star = manage activities??
     - Code Artifact = store, publish, share pkgs
     - Code Guru = ML automated code reviews
-    - triggers and notifications thru sns 
 - Code Commit
     - secure - ssh or https for auth
     - encrypted using kms
@@ -60,7 +59,6 @@
     - can run locally for troubleshooting beyond logs
 
 
-- Code Build
 - Code Deploy
 - Code Star
 - Code Artifact

@@ -361,7 +361,7 @@
         - logging, montioring
         - storage class config
         - client side encryption
-- snow family
+# snow family
     - portable devices
     - for edge computing
         - preprocess
@@ -411,10 +411,10 @@
     - relational
         - RDS
             - PG, MySql, MSSql
-        - Aurora
-            - more expensive (not in free tier)
-            - more performant (cloud optimized)
-            - can run PG or MySql
+            - Aurora
+                - more expensive (not in free tier)
+                - more performant (cloud optimized)
+                - can run PG or MySql
     - NoSql
 - RDS impl
     - it's own service listed in services
@@ -423,10 +423,9 @@
         - free tier check box (or prod or dev)
         - password connection is fine
         - create a security access group
-    - once created, can take a snapshot
     - can take snapshots
-        - can create a new/copy of this db via snap shot
-        - can share
+        - for new/copy of this db
+        - or for sharing
 - RDS architecture
     - main + read replicas pattern
         - (including read replicas in other AZs)
@@ -520,7 +519,7 @@
     - run on demand
     - limited by time - short executions
     - scaling is automated
-    - pay per req.s and compute time
+    - pay per req and compute time
         - 1st 1MM requests free. $.20/MM after
         - 1st 400,000GBs free of RAM (processing)
             - (400k seconds of 1 GB use)
@@ -714,8 +713,6 @@
             - compared to direct connect which is a private hard wired connection
         2. customer gateway
             - on-prem side
-
-@ #31
 
 
 
