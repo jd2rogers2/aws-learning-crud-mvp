@@ -17,13 +17,62 @@
 - good for improved performance, cacheing
 - ephemeral, would need a copy/backup system
 
+## CICD
+- summary:
+    - Code Commit = version control
+    - Code Pipeline = pipline orchestration
+    - Code Build = build and test
+    - Code Deploy = deploying to EC2
+    - Code Star = manage activities??
+    - Code Artifact = store, publish, share pkgs
+    - Code Guru = ML automated code reviews
+    - triggers and notifications thru sns 
+- Code Commit
+    - secure - ssh or https for auth
+    - encrypted using kms
+    - no size limit
+    - fully managed
+    - open source tool integrations
+- Code Pipeline
+    - integrates with all the other tools here
+    - configure in stages (like gitlab yml)
+        - stages have multiple action groups
+    - each pipeline creates artifact(s) in s3
+    - fails and cancels can be sent to cloudwatch
+    - trigger via cloud watch events or with periodic codepipeline checks
+    - manual approval an option for triggering a stage
+        - i.e. triggering Code Deploy to prod
+        - approver must have GetPipeline and PutApprovalResult IAM perms
+- Code Build
+    - sources = Code Commit, S3, bitbucket, github
+    - buildspec.yml for instructions
+        - copies in specified source code files
+        - runs specific instructions in phases
+            - install, pre_build, build, post_build
+        - sounds similar to Dockerfile
+        - runs in Code Build container
+        - must be in root
+        - define env vars here
+            - or pull from Secrets Manager or Parameter Store
+    - output logs to CloudWatch or S3
+    - envs for most languages and docker for the rest
+    - can cache files in S3 bucket across builds or for large builds
+    - can run locally for troubleshooting beyond logs
+
+
+- Code Build
+- Code Deploy
+- Code Star
+- Code Artifact
+- Code Guru
+
 
 
 ### practice tests
 ## 1 (19 july)
 - things to research:
     - review cloud practitioner notes
-    - tooling (code deploy, build)
+    - tooling (Code Deploy, Build)
     - cognito
     - IAM - user pools, identity pools
     - cloudwatch, detailed monitoring, cloudwatch Events, alarms
@@ -31,7 +80,7 @@
     - api gateway caching (maybe compile all caching), mapping templates (xml > json)
     - lambda - sqs event source, cloud watch event source, dep pkg (zip files)
     - event bridge
-    - code deploy, appspec listeners/lifecycle hooks
+    - Code Deploy, appspec listeners/lifecycle hooks
     - dynamodb - streams, parallel scans, throughput, session feature, operations
     - ecs - launch types (ec2, fargate), vocab task vs pod etc., HOST_PORT:CONTAINER_PORT mappings (0 for host will be automatically handled), task definitions
     - s3 hive compatible
