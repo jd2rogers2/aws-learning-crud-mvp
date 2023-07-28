@@ -6,9 +6,10 @@
     - CodePipeline = pipeline orchestration
     - CodeBuild = build and test
     - CodeDeploy = deploying to EC2
-    - CodeStar = manage activities??
+    - CodeStar = scaffolds all the other developer services
     - CodeArtifact = store, publish, share pkgs
     - CodeGuru = ML automated code reviews
+    - Cloud9 - online IDE
 - CodeCommit
     - secure - ssh or https for auth
     - encrypted using kms
@@ -25,16 +26,16 @@
     - manual approval an option for triggering a stage
         - i.e. triggering CodeDeploy to prod
         - approver must have GetPipeline and PutApprovalResult IAM perms
-    - can integrate with Cloud Formation
+    - can integrate with CloudFormation
 - CodeBuild
     - sources = CodeCommit, S3, bitbucket, github
     - buildspec.yml for instructions
+        - must be in root
         - copies in specified source code files
         - runs specific instructions in phases
             - install, pre_build, build, post_build
         - sounds similar to Dockerfile
         - runs in CodeBuild container
-        - must be in root
         - define env vars here
             - or pull from Secrets Manager or Parameter Store
     - output logs to CloudWatch or S3
@@ -48,6 +49,9 @@
         - auto rollback
         - or trigger CloudWatch alarm
     - appspec.yml defines config
+    - rollbacks are really redeploys of last working instance
+    - each hosting service has its own lifecycle events, but generally:
+        - ApplicationStop, DownloadBundle, BeforeInstall, Install, AfterInstall, ApplicationStart, ValidateService
     - deployment strategies
         - in-place
             - AllAtOnce - down time, fast
@@ -58,13 +62,43 @@
     - CodeDeploy Agent
         - computer user
         - needs to be installed on EC2 instance(s)
-        - needs S3 permissions to go and get to-be-deployed artifacts
-
+        - separately, instance needs S3 permissions to go and get to-be-deployed artifacts
+    - Lambda integration
+        - linear = % pointing towards new version increases every N minutes
+            - i.e. LambdaLinear10PercentEvery3Minutes
+        - Canary = point small % to new version then straight to 100%
+            - i.e. LambdaCanary10Percent5Minutes
+        - AllAtOnce = 100% right away
+    - ECS integration
+        - only blue/green strategy
+        - works similar to lambda
+            - linear, canary, AllAtOnce
+            - i.e. ECSCanary10Percent5Minutes
 - CodeStar
+    - scaffolds all of the other service for you
+    - select configured options and it creates a CodeCommit repo with files, creates a CodePipeline with build and deploy to Beanstalk/EC2/etc.
 - CodeArtifact
+    - dependency storage
+    - use with npm, pip, maven, etc.
+    - caches dependencies so they're not lost
+    - secure
+    - proxy to public npmjs stores
+    - CodeBuild can get from here instead of public stores
+    - can trigger EventBridge events which in turn can trigger CodeDeploy 
+        - i.e. on every new dependency version
+    - has multiple repositories
+    - use "Domain" for shared deps across repositories
 - CodeGuru
-
-
+    - CodeGuru Reviewer = ML code reviews, bugs, security vulnerabilities
+        - STATIC code analysis
+    - Profiler = code performance analysis
+        - on live/runtime of app
+    - define how deep in callstack to go
+    - define report intervals
+- Cloud9
+    - online IDE
+    - prepackaged with dev envs (js, pythong, etc.)
+    - spins up EC2 insts to run code
 
 ### practice tests
 ## 1 (19 july)
