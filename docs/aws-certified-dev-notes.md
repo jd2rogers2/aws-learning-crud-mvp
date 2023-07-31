@@ -100,20 +100,62 @@
     - prepackaged with dev envs (js, pythong, etc.)
     - spins up EC2 insts to run code
 
+## Cognito
+- federated identities, amzn, FB, google, apple, saml
+    - need 3rd party client ID, secret
+- user pools
+    - customer signin
+    - integrates with API gateway and ALB
+    - serverless node hits user db
+    - MFA (email, phone)
+    - PW reset
+    - responds with JWT
+        - username
+        - "sub" property is user id
+    - uses SES - simple email service
+    - provides UI
+        - custom domain - need ACM cert, define in app integration 
+    - user mgmt dashboard
+    - lambda triggers on action (i.e. signup)
+    - "adaptive auth"
+        - generates a risk score based on login (IP, location, device)
+        - can do more MFA if high risk
+- identity pools ("federated identities")
+    - temporary creds
+    - for users trying to access aws resources
+        - define given IAM policies in cognito
+        - policy can give permissions like `cognito-id.sub` for any of this user's dynamodb/s3 data
+    - id pool (source/db) can be:
+        - 3rd party (fb, google, etc.), cognito user pool, saml
+        - guest access (unauthed)
+
+## Lambda
+- integrates with Events for cron
+- integrates with kinesis for processing streaming data
+- can be sync or async
+- sync if client needs response
+- ALB integration
+    - to expose lambda to https endpoint
+    - function must be registered in target group
+    - converts http request to json for lambda
+    - lambda should return json
+    - need to configure to handle multi-header values (query param lists)
+    - 
+
 ### practice tests
 ## 1 (19 july)
 - things to research:
     - review cloud practitioner notes
     - tooling (CodeDeploy, Build)
+    - CodeDeploy, appspec listeners/lifecycle hooks
     - cognito
-    - IAM - user pools, identity pools
+        - IAM - user pools, identity pools
+    - dynamodb - streams, parallel scans, throughput, session feature, operations
     - CloudWatch, detailed monitoring, CloudWatch Events, alarms
     - AWS CLI put-metric-data
     - api gateway caching (maybe compile all caching), mapping templates (xml > json)
     - lambda - sqs event source, CloudWatch event source, dep pkg (zip files)
     - event bridge
-    - CodeDeploy, appspec listeners/lifecycle hooks
-    - dynamodb - streams, parallel scans, throughput, session feature, operations
     - ecs - launch types (ec2, fargate), vocab task vs pod etc., HOST_PORT:CONTAINER_PORT mappings (0 for host will be automatically handled), task definitions
     - s3 hive compatible
     - beanstalk - source bundle
