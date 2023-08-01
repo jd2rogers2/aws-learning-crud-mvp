@@ -140,26 +140,53 @@
     - converts http request to json for lambda
     - lambda should return json
     - need to configure to handle multi-header values (query param lists)
-    - 
+- async
+    - lots of integrations for invoking
+        - S3, SNS, CloudWatch Events/EventBridge, and others but not needed
+    - events put in a queue
+    - retries 3 times if error
+    - idempotent is requirement
+    - define DLQ for failures
+        - lambda func needs IAM permissions to write to queue
+    - 202 response for successful invoke but unknown response (could be failure)
+- event invokation
+    - EventBridge cron rule
+        - every x time
+        - or "cron statement" more granular/specific
+    - EventBridge CodePipeline event rule
+    - S3 event integration
+- event source mapping
+    - from kinesis streams, dynamo streams, sqs queue
+    - lambda polls stream/queue
+
+
+queues vs streams
+- queues are single thread
+- queues only send message to 1 consumer
+- queues retire message after being sent
+- streams have many threads/topics/log file
+- streams send messages to all consumers of the topic
+- streams persist messages long term as subscribers can get messages from any point in time
 
 ### practice tests
 ## 1 (19 july)
 - things to research:
     - review cloud practitioner notes
-    - tooling (CodeDeploy, Build)
-    - CodeDeploy, appspec listeners/lifecycle hooks
-    - cognito
+    ✅ tooling (CodeDeploy, Build)
+    ✅ CodeDeploy, appspec listeners/lifecycle hooks
+    ✅ cognito
         - IAM - user pools, identity pools
     - dynamodb - streams, parallel scans, throughput, session feature, operations
-    - CloudWatch, detailed monitoring, CloudWatch Events, alarms
-    - AWS CLI put-metric-data
-    - api gateway caching (maybe compile all caching), mapping templates (xml > json)
+    - below all one udemy section
+        - CloudWatch, detailed monitoring, CloudWatch Events, alarms
+        - x-ray
+        - EventBridge
     - lambda - sqs event source, CloudWatch event source, dep pkg (zip files)
-    - event bridge
     - ecs - launch types (ec2, fargate), vocab task vs pod etc., HOST_PORT:CONTAINER_PORT mappings (0 for host will be automatically handled), task definitions
     - s3 hive compatible
     - beanstalk - source bundle
-    - x-ray
+    - AWS CLI put-metric-data
+    - api gateway caching (maybe compile all caching), mapping templates (xml > json)
     - sqs - config (long polling), system arch, 
     - certificate manager = for issuing SSL/TLS certificates
         - vs kms, secrets mngr, priv cert auth
