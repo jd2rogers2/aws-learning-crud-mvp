@@ -71,7 +71,7 @@
         - AllAtOnce = 100% right away
     - ECS integration
         - only blue/green strategy
-        - works similar to lambda
+        - works similar to Lambda
             - linear, canary, AllAtOnce
             - i.e. ECSCanary10Percent5Minutes
 - CodeStar
@@ -116,7 +116,7 @@
     - provides UI
         - custom domain - need ACM cert, define in app integration 
     - user mgmt dashboard
-    - lambda triggers on action (i.e. signup)
+    - Lambda triggers on action (i.e. signup)
     - "adaptive auth"
         - generates a risk score based on login (IP, location, device)
         - can do more MFA if high risk
@@ -134,11 +134,41 @@
 - integrates with kinesis for processing streaming data
 - can be sync or async
 - sync if client needs response
+- functions take in event, context args
+- networking
+    - by default deployed outside your vpc
+    - but can put it in your vpc
+        - public VPC will not give your Lambda public access in either direction. can't do it
+        - Lambda needs specific permissions
+        - if private vpc use NAT gateway to make Lambda public
+- performance
+    - add more RAM to get more vCPUs
+    - 3s default timeout, up to 15m
+    - can cache connections (i.e. db) across calls if defined outside of function
+    - cache (ephemeral) files in /tmp folder for across calls (10GB of space)
+    - Lambda Layers for storing dependencies locally rather than reinstalling every run
+- concurrency
+    - account wide 1000 running instances
+    - can set "reserved concurrency" per function
+    - can use "provisioned concurrency" to keep X instances warm to reduce initialization after downtime
+- logging
+    - auto sends to CloudWatch logs
+    - can config to send to X-Ray
+- Edge Function
+    - running lambdas in CloudFront at an edge location
+    - CloudFront Functions vs Lambda@Edge
+        - 1 only JS - faster
+        - 2 only Node or Python
+        - 1 ultra small
+            - small max mem
+            - small max execution time
+        - 1 no network, FS, request body access
+        - 2 yes
 - ALB integration
-    - to expose lambda to https endpoint
+    - to expose Lambda to https endpoint
     - function must be registered in target group
-    - converts http request to json for lambda
-    - lambda should return json
+    - converts http request to json for Lambda
+    - Lambda should return json
     - need to configure to handle multi-header values (query param lists)
 - async
     - lots of integrations for invoking
@@ -147,8 +177,9 @@
     - retries 3 times if error
     - idempotent is requirement
     - define DLQ for failures
-        - lambda func needs IAM permissions to write to queue
+        - Lambda func needs IAM permissions to write to queue
     - 202 response for successful invoke but unknown response (could be failure)
+    - permissions live on Lambda function
 - event invokation
     - EventBridge cron rule
         - every x time
@@ -156,11 +187,29 @@
     - EventBridge CodePipeline event rule
     - S3 event integration
 - event source mapping
-    - from kinesis streams, dynamo streams, sqs queue
-    - lambda polls stream/queue
+    - from kinesis streams, dynamodb streams, sqs queue
+    - Lambda polls stream/queue
+    - can config Lambda to batch process in parallel
+        - usually for high traffic streams
+    - error in stream/batch will cause entire batch to reprocess or pause
+    - SQS + FIFO
+- "destinations"
+    - like DLQ but for failed AND successful events
+    - for async
+        - goes to SQS, SNS, Lambda, or EventBridge bus
+    - for event mapping
+        - goes to SQS, SNS
+- CloudFormation deployment - write yaml, ref S3 zip file with func + deps packaged up
+- containerize via ECR, up to 10GB, write standard Dockerfile
+    - aws has lambda base images, already cached
+- aliases
+    - point to a specific version
+    - canary deployment (95% pointing to v2 (prod), 5% to v3 (test))
 
 
 queues vs streams
+- both can have lots of messages, need sharding
+    - we still partition on a key
 - queues are single thread
 - queues only send message to 1 consumer
 - queues retire message after being sent
@@ -179,9 +228,9 @@ queues vs streams
     - dynamodb - streams, parallel scans, throughput, session feature, operations
     - below all one udemy section
         - CloudWatch, detailed monitoring, CloudWatch Events, alarms
-        - x-ray
+        - X-Ray
         - EventBridge
-    - lambda - sqs event source, CloudWatch event source, dep pkg (zip files)
+    - Lambda - sqs event source, CloudWatch event source, dep pkg (zip files)
     - ecs - launch types (ec2, fargate), vocab task vs pod etc., HOST_PORT:CONTAINER_PORT mappings (0 for host will be automatically handled), task definitions
     - s3 hive compatible
     - beanstalk - source bundle
