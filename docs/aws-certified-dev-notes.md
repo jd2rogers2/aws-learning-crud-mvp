@@ -205,6 +205,24 @@
 - aliases
     - point to a specific version
     - canary deployment (95% pointing to v2 (prod), 5% to v3 (test))
+- w/ CodeDeploy
+    - uses SAM (serverless IaC that uses CloudFormation)
+    - same deployment strategies: linear, canary, all-at-once
+- accessing via URL
+    - can expose w/out api gateway or ALB
+    - CORS config available
+    - can only point to 1 alias
+    - need to add IAM permissions to lambda with AuthType: None, action: invoke, principal: *
+        - cross account then both sides need perms
+- integrates with CodeGuru
+- limits
+    - 10GB of RAM/mem
+    - 900s/15m
+    - /tmp space of 10G
+    - 1000 concurrent instances
+    - zip file, 50MB compressed, 250MB uncompressed
+    - 4KB of env var space
+
 
 
 queues vs streams
