@@ -547,7 +547,7 @@
 - 1 is created by default when account is made
 - elastic IPs
     - persist across EC2 shutdowns and restarts
-    - pay when unused (because AWS has to keep the registered)
+    - pay when unused (because AWS has to keep them registered)
 - EC2 private IPs are fixed across restarts
 - VPC flow logs
     - all IP traffic for VPC
@@ -758,7 +758,6 @@ TODOs:
 - DONE - create admin group with "admin access" policy
 - DONE - reread "roles" section to review as it's a new concept
 - DONE - learn about VPC more!!!!
-- !!!!! pearson vue has practice exams, take one
 
 
 

@@ -150,7 +150,9 @@
 - concurrency
     - account wide 1000 running instances
     - can set "reserved concurrency" per function
+        - will always have these instances available, no other function can take them
     - can use "provisioned concurrency" to keep X instances warm to reduce initialization after downtime
+        - already initialized exec envs
 - logging
     - auto sends to CloudWatch logs
     - can config to send to X-Ray
@@ -206,7 +208,7 @@
     - point to a specific version
     - canary deployment (95% pointing to v2 (prod), 5% to v3 (test))
 - w/ CodeDeploy
-    - uses SAM (serverless IaC that uses CloudFormation)
+    - uses SAM (serverless application model - serverless IaC that uses CloudFormation)
     - same deployment strategies: linear, canary, all-at-once
 - accessing via URL
     - can expose w/out api gateway or ALB
@@ -217,14 +219,71 @@
 - integrates with CodeGuru
 - limits
     - 10GB of RAM/mem
-    - 900s/15m
+    - 900s/15m timeout
     - /tmp space of 10G
     - 1000 concurrent instances
     - zip file, 50MB compressed, 250MB uncompressed
     - 4KB of env var space
 
+### Route 53
+- DNS, domain registrar
+- "zone file" = hashmap url: IP
+- "name server" resolves dns queries
+- "authoratative" = we configure url -> IP records
+- "hostname" ugly aws url aws.region.az.service.instancename.com
+- record:
+    - domain - url
+    - record type - A|AAAA|CNAME|NS
+        - A = domain: IPv4
+        - AAAA = domain: IPv6
+        - CNAME = domain A: domain B
+            - CNAME vs alias (A, AAAA)
+                - cname = domain to any hostname, must have > 2 domain levels (blah.domain.com)
+                - alias = domain to any hostname, can point direct to 2 level domain (domain.com)
+                    - free
+                    - native health check
+        - NS = name servers - reroutes to help in finding your final IP
+    - value - IP
+    - routing policy - how 53 responds
+    - ttl - time record is cached in 53
+- $0.50 per month per domain name
+- public hosted zone
+- private hosted zone
+    - to access resources inside a VPC
+
+### API Gateway
+- serverless
+- websockets capable
+- versioning and env (dev, prod) capable
+- security - auth, api keys, throttling
+- cacheing
+- endpoint types
+    - edge optimized
+        - default
+        - just in one region but all CloudFront edge location know about it
+    - regional
+        - for targeting a specific region
+        - can manually configure to CloudFront
+    - private
+        - only accessible from inside your VPC
+- security
+    - auth - IAM, cognito, custom
+    - HTTPS - thru ACM
 
 
+### DynamoDB
+- DynamoDB Accelerator (DAX)
+    - only supports write through cacheing
+
+
+## aws provided sample Qs - mine then correct
+D, B+E, A+E, B+C, A, D, B, D, D, D
+D, A+B, A+E, A+D, A, D, B, B, C, D
+    .5        1            1  1
+### takeaways
+appsync, api gateway, cloudwatch
+
+## General learnings
 queues vs streams
 - both can have lots of messages, need sharding
     - we still partition on a key
@@ -234,6 +293,15 @@ queues vs streams
 - streams have many threads/topics/log file
 - streams send messages to all consumers of the topic
 - streams persist messages long term as subscribers can get messages from any point in time
+cacheing strategies
+- write through - set in cache on write
+    - pro: data is always fresh
+    - con: some/most data is never read (in some apps/contexts)
+    - con: added latency on write because 2 write actions (db + cache) for every req (but usually ok per users)
+- lazy loading - write to cache on reads
+    - pro: only read data is cached
+    - con: added latency on misses (3 actions, miss > db read > cache write)
+    - con: data can get stale (writes don't update cache)
 
 ### practice tests
 ## 1 (19 july)
@@ -243,20 +311,20 @@ queues vs streams
     ✅ CodeDeploy, appspec listeners/lifecycle hooks
     ✅ cognito
         - IAM - user pools, identity pools
-    - dynamodb - streams, parallel scans, throughput, session feature, operations
+    ✅ Lambda - sqs event source, CloudWatch event source, dep pkg (zip files)
     - below all one udemy section
         - CloudWatch, detailed monitoring, CloudWatch Events, alarms
         - X-Ray
         - EventBridge
-    - Lambda - sqs event source, CloudWatch event source, dep pkg (zip files)
     - ecs - launch types (ec2, fargate), vocab task vs pod etc., HOST_PORT:CONTAINER_PORT mappings (0 for host will be automatically handled), task definitions
-    - s3 hive compatible
-    - beanstalk - source bundle
-    - AWS CLI put-metric-data
     - api gateway caching (maybe compile all caching), mapping templates (xml > json)
-    - sqs - config (long polling), system arch, 
+    - dynamodb - streams, parallel scans, throughput, session feature, operations
     - certificate manager = for issuing SSL/TLS certificates
         - vs kms, secrets mngr, priv cert auth
+    - beanstalk - source bundle
+    - s3 hive compatible
+    - AWS CLI put-metric-data
+    - sqs - config (long polling), system arch
     - rds proxy = LB sorta for RDS
     - step functions
 - SAML = secure assertion markup language
