@@ -256,11 +256,26 @@
 - websockets capable
 - versioning and env (dev, prod) capable
 - security - auth, api keys, throttling
-- cacheing
+- caching
+- 29s timeout
+- api types
+    - http api
+        - cheapest
+        - proxies
+        - no data mapping
+        - no api keys or usage plans
+        - CORS and OAuth for sec
+    - rest api
+        - all the features
+    - websocket api
+        - lambda functions for each life cycle (OnConnect, SendMessage, OnDisconnect)
+        - broadcast by hitting api gateway "callback" endpoint from lambda code. sameurl/@connections/connectionId
+        - routing - specify "route selection expression" (msg json attr) and define routing map to point to a specific endpoint/function
+        - persist connectionIds in DynamoDB
 - endpoint types
     - edge optimized
         - default
-        - just in one region but all CloudFront edge location know about it
+        - just in one region but all CloudFront edge locations know about it
     - regional
         - for targeting a specific region
         - can manually configure to CloudFront
@@ -269,11 +284,66 @@
 - security
     - auth - IAM, cognito, custom
     - HTTPS - thru ACM
+- integration types
+    - MOCK = stubbed endpoints for WIP
+    - HTTP_PROXY = just passes req/res
+    - AWS_PROXY = lambda
+- mapping template
+    - translates req/res allowing i.e. json payload going into xml endpoint(s)
+    - or formats
+- OpenApi compatible (import or export)
+    - including validations, but why?
+- caching
+    - defined at stage level
+    - each endpoint can be customized
+    - default 300s, up to 3600s
+    - expensive
+    - Cache-Control: max-age=0
+        - plz configure to require IAM permissions
+- usage plan
+    - customers use api, $$ and configuring how much and who uses API
+    - uses api keys to ID customer
+- api keys
+    - X-Api-Key header needed
+    - 1. build, deploy api gateway
+    - 2. create usage plan
+    - 3. create api key
+    - 4. assoc. stages + keys w/ usage plan
+- CloudWatch integration
+    - at stage level
+    - configure logging level (ERROR, INFO, DEBUG, etc.)
+    - use x-ray for enhanced logs
+    - metrics
+        - CacheHitCount, CacheMissCount = cache efficiency checks
+        - Count = total endpoint hits
+        - IntegrationLatency = measure of fwd to BE service until response from BE service
+        - Latency = total in-to-out time
+        - 4XXErrors, 5XXErrors = error counts
+- throttling
+    - 429 status code
+    - default 10k/s across all apis
+    - can throttle individual endpoints to save entire system
+- CORS
+    - must enable on API gateway side (do thru console)
+    - headers required
+        - Access-Control-Allow-Methods
+        - Access-Control-Allow-Headers
+        - Access-Control-Allow-Origin
+- auth
+    - IAM policy - sig v4
+    - resource policy
+        - cross account access
+        - for specific IP or endpoint only
+    - Cognito User pool
+    - Lambda/custom authorizer
+        - a (auth spec) lambda handles auth
+        - responds with resource policy
+        - policy is cached at api gateway level
 
 
 ### DynamoDB
 - DynamoDB Accelerator (DAX)
-    - only supports write through cacheing
+    - only supports write through caching
 
 
 ## aws provided sample Qs - mine then correct
@@ -293,7 +363,7 @@ queues vs streams
 - streams have many threads/topics/log file
 - streams send messages to all consumers of the topic
 - streams persist messages long term as subscribers can get messages from any point in time
-cacheing strategies
+caching strategies
 - write through - set in cache on write
     - pro: data is always fresh
     - con: some/most data is never read (in some apps/contexts)
