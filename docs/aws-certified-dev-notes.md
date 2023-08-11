@@ -340,6 +340,109 @@
         - responds with resource policy
         - policy is cached at api gateway level
 
+### messaging
+- event based pro - spike resistant
+- "decoupling" key word
+- SQS
+    - "producer" - msg sender, can be multiple (SendMessage)
+    - "consumer" - polls queue, processes, deletes (DeleteMessage)
+    - "visibility timeout" - when message is able to be read again after initial read
+        - in case of process failure
+        - ChangeMessageVisibility - to extend invisibility
+    - MaximumReceives = # of reads before a msg is sent to DLQ
+    - Standard Queue
+        - unlimited throughput
+        - unlimited # of msgs in queue
+        - retention: default 4 days, max 14
+        - low latency < 10ms for publish and receive
+        - 256KB limit per msg
+        - "at least once delivery" - can be sent twice
+        - order unimportant
+    - consumer can consume up to 10 msgs at once
+    - ASG can scale w/ Queue Length
+        - ApproximateNumberOfMessages
+        - use CloudWatch Alarm to trigger scale
+    - encrypted in-flight with HTTPS and at rest with KMS
+    - Long polling
+        - to reduce consumer reqs
+        - poll sends response slower, waits to see if any msgs come in
+        - 1-20s
+        - can configure at queue level
+        - or ReceiveMessageWaitTimeSeconds property on message send
+    - Delay Queue
+        - configure to have messages invisible for set time at the beginning of their life
+        - or, on msg send can set delay time
+    - SQS extended client - s3 storage for larger msgs
+    - FIFO queue
+        - same kind of queue just with more integrity
+        - can delete duplicates
+            - content based or group id
+        - messages processed in order by consumers
+        - lower throughput (300m/s)
+- SNS
+    - pub/sub (not just an email sending service)
+    - "fan out" pattern - so multiple subscribers can read from separate queues
+                      /-> SQS1 -> consumer 1
+    producer --> SNS --> SQS2 -> consumer 2
+                      \-> SQS3 -> consumer 3
+    - FIFO SNS queues too
+    - "filter policy" - if multi topics in SNS, only sends 1 topic to a subscriber (i.e. orders to sub1 + cancels to sub2)
+- Kinesis
+    - streams
+        - partition key is important
+        - lots of data, lots of shards
+        - PutRecord API action
+        - ProvisionedThroughputExceededError
+            - choose better partition key
+            - scale (split shards)
+            - retries w/ exponential backoff
+    - firehose
+    - analytics
+    - video stream
+
+### telemetry
+- CloudWatch
+    - metrics
+        - dimension = grouping attr (instanceId, environment, etc.)
+            - up to 30 dimensions per metric
+        - belongs to a namespace (kind of like a tag)
+        - detailed monitoring = metrics every 1m instead of default every 5m
+        - custom metrics
+            - "PutMetricData" api call in your code
+            - !! can be pushed in past or future
+                - configure EC2 instance time correctly plz
+            - EC2 memory usage needs to be a custom metric
+            - detailed monitoring
+                - standard - 1m
+                - high resolution - 1s-30s (higher cost)
+    - logs
+        - define custom expiry
+        - Log groups: tags
+        - Log stream: application, container, etc.
+        - define expiration policy
+        - can send them to streams, S3, Lambda etc.
+        - encrypted by default
+        - custom KMS encryption option
+        - use SDK or CloudWatch Logs Agent
+        - also lots of services auto send logs
+        - CloudWatch Logs Insights - query tool
+        - exporting
+            - perms needed on both sides
+            - S3
+                - up to 12 hrs
+                - CreateExportTask
+        - CloudWatch Logs Subscriptions
+            - for real time processing/analysis
+            - send it to specific stream
+            - use "subscription filter" to define which logs are sent
+        - aggregations
+            - can be across region or account
+            - CloudWatch Logs Metrics Filter
+                - not retroactive
+                - only sends matching logs
+    - events
+    - alarms
+        - if metric goes over a set point
 
 ### DynamoDB
 - DynamoDB Accelerator (DAX)
