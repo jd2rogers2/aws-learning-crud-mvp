@@ -349,6 +349,8 @@
     - "visibility timeout" - when message is able to be read again after initial read
         - in case of process failure
         - ChangeMessageVisibility - to extend invisibility
+    - "group_id" = sort of like partition key
+        - but no partitioning
     - MaximumReceives = # of reads before a msg is sent to DLQ
     - Standard Queue
         - unlimited throughput
@@ -371,7 +373,7 @@
         - or ReceiveMessageWaitTimeSeconds property on message send
     - Delay Queue
         - configure to have messages invisible for set time at the beginning of their life
-        - or, on msg send can set delay time
+        - or, on msg send, can set delay time
     - SQS extended client - s3 storage for larger msgs
     - FIFO queue
         - same kind of queue just with more integrity
@@ -399,6 +401,28 @@
     - firehose
     - analytics
     - video stream
+    - KCL - Kinesis Client Library
+        - workers/processors
+        - max number of workers = number of shards
+        - each worker tracks its reads in DynamoDB (needs perms)
+        - can run on EC2, Beanstalk
+    - shards can be split and merged
+        - splits retire old shard and make 2 new ones with the original data
+    - Kinesis Data Firehose
+        - "ingestion service"
+            - can read from other datastores
+            - can be written to directly (SDK, agent, etc.)
+        - writes to S3, Redshift, OpenSearch (amzn elastisearch), 3rd party, custom http endpoint
+        - "near real time" 60 second latency for any batch
+            - "buffer" = batch size of when to write to source
+            - configurable
+    - Kinesis Data Analytics
+        - reads from and writes to Kinesis Streams and Firehose
+        - SQL based
+        - Apache Flink option
+            - more powerful queries than SQL
+            - cannot read from Firehose
+            - can read from MSK (kafka)
 
 ### telemetry
 - CloudWatch
