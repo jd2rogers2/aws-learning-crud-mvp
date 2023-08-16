@@ -97,7 +97,7 @@
     - define report intervals
 - Cloud9
     - online IDE
-    - prepackaged with dev envs (js, pythong, etc.)
+    - prepackaged with dev envs (js, python, etc.)
     - spins up EC2 insts to run code
 
 ## Cognito
@@ -367,7 +367,7 @@
     - encrypted in-flight with HTTPS and at rest with KMS
     - Long polling
         - to reduce consumer reqs
-        - poll sends response slower, waits to see if any msgs come in
+        - queue sends response slower, waits to see if any msgs come in
         - 1-20s
         - can configure at queue level
         - or ReceiveMessageWaitTimeSeconds property on message send
@@ -390,6 +390,8 @@
     - FIFO SNS queues too
     - "filter policy" - if multi topics in SNS, only sends 1 topic to a subscriber (i.e. orders to sub1 + cancels to sub2)
 - Kinesis
+    - analytics
+    - video, click, event stream
     - streams
         - partition key is important
         - lots of data, lots of shards
@@ -398,9 +400,6 @@
             - choose better partition key
             - scale (split shards)
             - retries w/ exponential backoff
-    - firehose
-    - analytics
-    - video stream
     - KCL - Kinesis Client Library
         - workers/processors
         - max number of workers = number of shards
@@ -424,13 +423,13 @@
             - cannot read from Firehose
             - can read from MSK (kafka)
 
-### telemetry
+### monitoring & telemetry
 - CloudWatch
     - metrics
         - dimension = grouping attr (instanceId, environment, etc.)
             - up to 30 dimensions per metric
         - belongs to a namespace (kind of like a tag)
-        - detailed monitoring = metrics every 1m instead of default every 5m
+        - detailed monitoring = metrics every 1m instead of default every 5m ($$)
         - custom metrics
             - "PutMetricData" api call in your code
             - !! can be pushed in past or future
@@ -443,7 +442,6 @@
         - define custom expiry
         - Log groups: tags
         - Log stream: application, container, etc.
-        - define expiration policy
         - can send them to streams, S3, Lambda etc.
         - encrypted by default
         - custom KMS encryption option
@@ -459,14 +457,59 @@
             - for real time processing/analysis
             - send it to specific stream
             - use "subscription filter" to define which logs are sent
+            - cross account subscriptions
+                - sends data to "Subscription Destination" in recipient account
         - aggregations
             - can be across region or account
-            - CloudWatch Logs Metrics Filter
-                - not retroactive
-                - only sends matching logs
-    - events
+    - CloudWatch Logs Metric Filter
+        - create metrics based off of logs
+        - with specific filter aspects
+        - i.e. counts of "ERROR"
+        - can be used to trigger alarms
+        - not retroactive, only sends matching logs
     - alarms
         - if metric goes over a set point
+        - states = OK, INSUFFICIENT_DATA, ALARM
+        - period = amount of time we measure metric over
+        - targets
+            - EC2 instance (stop, reboot, recover)
+                - alarm not just email actions! can trigger reboot actions etc.
+            - ASG - scale out or in
+            - SNS
+        - composite alarms
+            - combo multiple alarms together with AND/OR
+            - alert only when conditions of 2 or more alarms are ALARMing
+        - can manually trigger alarm to test resulting actions
+    - CW Synthetics Canary
+        - sounds like some E2E testing
+        - screenshot tracking and comparison to uploaded
+        - "Broken Link Checker" checks any list of URLs
+        - "Canary Recorder" - click action recorder to write your tests automatically
+- EventBridge
+    - schedule cron jobs
+    - Event Pattern listener to trigger other actions
+        - from other services i.e. IAM signin, EC2 instance start, CodeBuild fail
+    - actions in Lambda, EC2, CodePipeline, etc.
+    - partner event bus for 3rd party integration
+    - schema registry for event format
+        - can be versioned
+    - resource based policy for intra account, region events
+- X-Ray
+    - visual trace or map of system/interactions
+    - "tracing" - each top level req has its own trace
+        - can add annotations to trace
+            - custom metadata (k/v) on trace for filtering
+        - for each component: traces made up of "segments" and sub segments
+    - "sampling" - capturing only subset of traces to keep x-ray reqs small
+        - configure rules of which or how many reqs to send
+    - Java, python, Go, Node, .Net
+    - use SDK in your app layer
+    - configure or add X-Ray daemon
+    - give service X-Ray write IAM perms
+    - Lambda enable "active tracing"
+    - "instrument my code/app" - measure a product's perf, diagnose errs, save trace info
+
+
 
 ### DynamoDB
 - DynamoDB Accelerator (DAX)
