@@ -471,6 +471,7 @@
         - if metric goes over a set point
         - states = OK, INSUFFICIENT_DATA, ALARM
         - period = amount of time we measure metric over
+        - high resolution metrics can trigger alarm every 10s
         - targets
             - EC2 instance (stop, reboot, recover)
                 - alarm not just email actions! can trigger reboot actions etc.
@@ -508,7 +509,17 @@
     - give service X-Ray write IAM perms
     - Lambda enable "active tracing"
     - "instrument my code/app" - measure a product's perf, diagnose errs, save trace info
-
+- Open Telemetry
+    - open source x-ray
+    - aws has a distrobution of it
+    - can send data to x-ray AND 3rd party
+- CloudTrail
+    - enabled by default
+    - can be put into CW Logs or S3
+    - mgmt events - user, role actions
+    - insights events - ML to find unusual activity
+    - doesn't save data events
+    - 90 day retention
 
 
 ### DynamoDB
