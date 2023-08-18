@@ -521,6 +521,105 @@
     - doesn't save data events
     - 90 day retention
 
+### Security
+- general
+    - HTTPS/SSL - at tansmission
+    - at rest
+        - server side encryption - server gets key from KMS and encrypts before write to DB
+        - client side encryption - client gets key, encrypts data, sends to server, write to DB
+- KMS
+    - able to audit key usage with CloudTrail
+    - "KMS Keys"
+        - symmetric encryption (AES-256)
+            - single key
+            - we hit KMS API for encryption, we never see key
+        - asymmetric encryption (RSA & ECC key pair)
+            - public key used for encrypt
+            - private key used for decrypt
+            - for use with users outside of AWS cloud, where they'll need to take their key with them
+        - types:
+            - aws owned keys
+            - aws managed keys - used w/in services, no user control
+            - customer managed keys
+                - can be created in KMS or...
+                - imported - not aws generated
+        - rotation every 1 year
+            - need to enable for customer managed
+    - keys are scoped per region
+        - so to copy encrypted EBS volume to different volume: encrypt > snapshot > copy to region > re encrypt with new key
+    - key policy
+        - key can't be accessed w/o one
+        - default everyone in aws acct can access
+    - custom keys
+        - define principals, roles, etc.
+        - define who admin is
+        - used for cross account
+        - can have an alias
+    - 4KB limit
+    - if over use Envelope encryption = GenerateDataKey API call
+        - gives you DEK - data encryption key
+        - AND encrypted DEK
+        - encrypt file with DEK
+        - put file and encrypted DEK together and send to storage
+    - API calls
+        - Encrypt
+        - Decrypt
+        - GenerateDataKey
+        - GenerateDataKeyWithoutPlaintext - test trick, used for manual encryption. doesn't encrypt for you
+        - all calls share same quota of max # of calls w/in reagion
+    - S3 SSE KMS encryption
+        - S3 bucket key
+        - S3 gets DEK and can therefore do encryption on S3 side
+            - better than hitting KMS every time
+    - default KMS key looks like:
+        {
+            Effect: 'allow',
+            Action: 'kms:*',
+            Principal: { AWS: 'aws:arn:iam::acct_id:username' },
+            Resource: '*',
+        }
+- CloudHSM
+    - Hardware Security Module
+    - they give us hardware we manage encryption software/algos
+    - we manage encryption keys
+    - integrate with KMS via custom key store
+- SSM Parameter Store (SSM = Simple Systems Manager)
+    - stores configs for apps
+    - integrates with KMS easily to encrypt (app would need KMS perms)
+    - version controlled
+- Secrets Manager
+    - capability to force rotation of secrets
+        - on schedule
+        - on demand
+        - integrates with DBs
+        - replicate across regions easily
+    - integrates with CloudFormation easily
+        - create ref in yml and can use that throughout other services
+
+### Containers
+- ECS
+    - EC2 launch type
+        - we manage/provision servers
+        - cluster of instances
+        - multiple tasks = container
+        - ECS Agent must be running on EC2 instance
+            - or does it run in container/task?
+            - agent talks to ECR, CW Logs, ECS service, S3
+            - instance must have IAM role called "instance profile"
+            - dif tasks can have dif roles
+                - defined in task def
+    - Fargate launch type
+        - serverless
+        - just define types of tasks and configure how much RAM, CPU you need
+    - ALB in front of cluster to point to task
+        - to expose task to public URL
+        - use Network Load Balancer for high throughput needs
+    - EFS attaches to cluster
+        - multi-AZ
+    - creates ASG for us behind the scenes
+- EKS
+- ECR
+- Beanstalk
 
 ### DynamoDB
 - DynamoDB Accelerator (DAX)
