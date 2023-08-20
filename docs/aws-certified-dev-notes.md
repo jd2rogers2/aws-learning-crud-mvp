@@ -182,7 +182,7 @@
         - Lambda func needs IAM permissions to write to queue
     - 202 response for successful invoke but unknown response (could be failure)
     - permissions live on Lambda function
-- event invokation
+- event invocation
     - EventBridge cron rule
         - every x time
         - or "cron statement" more granular/specific
@@ -237,11 +237,11 @@
         - A = domain: IPv4
         - AAAA = domain: IPv6
         - CNAME = domain A: domain B
-            - CNAME vs alias (A, AAAA)
-                - cname = domain to any hostname, must have > 2 domain levels (blah.domain.com)
-                - alias = domain to any hostname, can point direct to 2 level domain (domain.com)
-                    - free
-                    - native health check
+        - CNAME vs alias (A, AAAA)
+            - cname = domain to any hostname, must have > 2 domain levels (blah.domain.com)
+            - alias = domain to any hostname, can point direct to 2 level domain (domain.com)
+                - free
+                - native health check
         - NS = name servers - reroutes to help in finding your final IP
     - value - IP
     - routing policy - how 53 responds
@@ -580,6 +580,7 @@
         }
 - CloudHSM
     - Hardware Security Module
+    - if you need custom encryption, for extra sec. or compliance
     - they give us hardware we manage encryption software/algos
     - we manage encryption keys
     - integrate with KMS via custom key store
@@ -605,7 +606,7 @@
         - ECS Agent must be running on EC2 instance
             - or does it run in container/task?
             - agent talks to ECR, CW Logs, ECS service, S3
-            - instance must have IAM role called "instance profile"
+            - task must have "instance profile" (a policy/role for an instance)
             - dif tasks can have dif roles
                 - defined in task def
     - Fargate launch type
@@ -690,8 +691,12 @@
 - S3 PER PREFIX perf - 3,500 PUT/COPY/POST/DELETE or 5,500 GET/HEAD req/s
 - IAM roles should be attached to ECS TASKS
 - x-ray GetTraceSummaries for finding request by attr
-- lambda event source mappings are for when lambda needs to poll aka no invokation
+- lambda event source mappings are for when lambda needs to poll aka no invocation
     - so sqs, kinesis, dynamodb streams
+- CDK = use your fav coding language instead of yaml for CloudFormation
+- AppSync = scaffolded API Gateway with websockets and GraphQL
+    - serverless
+    - federated APIs feature (bundles multiple microservice APIs into one)
 
 
 ## aws provided sample Qs - mine then correct
