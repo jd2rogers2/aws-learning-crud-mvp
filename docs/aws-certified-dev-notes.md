@@ -626,6 +626,74 @@
     - only supports write through caching
 
 
+## practice test 18 aug review
+- CloudFormation template properties
+    Resources:
+        ResourceName1:
+            Type: AWS::EC2::Instance
+            Properties:
+                type: t2micro
+                ...
+        MyEIP:
+            Type: AWS::EC2::EIP
+            Properties:
+                InstanceId: !Ref ResouceName1
+- SAM template properties
+    - same as above
+    - but with its own CLI
+    - Transform - transforms SAM into CloudFormation template
+- buildspec properties
+    phases:
+        install:
+            commands:
+                - blah
+        pre_build, build, post_build
+- appspec properties
+    permissions:
+        owner: ec2-user
+    hooks:
+        ApplicationStop:
+            location: blah.sh
+            timeout: int
+            runas: ec2-user
+- lambda context and event arg shapes
+    - context - info about the runtime env, request ID, invoker, etc.
+    - event - http req, w/ body etc.
+- SWF - simple workflow service = orchestrator
+- secrets manager vs acm vs kms vs param store
+    - secrets manager = k/v store but encrypts vals. has rotation
+    - param store = k/v store
+    - kms - encrypts things, doesn't store them
+    - acm - cert mngr for SSL/TLS. how domains register for HTTPS
+- instance profiles - containers for IAM policies
+- "exponential backoff" for throttling error fix
+- DynamoDB
+    - conditional writes - only set to X if Y is still what i'm changing. solves simultaneous writes
+    - eventually consistent reads are more efficient than strongly consistent
+    - when measuring efficiency we want highest RCUs per sec x highest item size
+        - aka reading more data per action, and more actions per sec
+    - 1 eventually consistent RCU needed per 8kb
+    - 1 strongly consistent RCU needed per 4kb
+    - 1 transactional RCU needed per 2kb
+    - 1 WCU needed per 1kb
+    - global secondary index - index with different partition and sort keys
+    - local secondary index - index with partition key but different sort key
+        - local as in within same partition (cuz same partition key)
+    - DynamoDB streams = captures data modification events
+        - records have 24hr ttl
+    - records can have ttl - configure pointer towards your attr
+    - scans get every item THEN filters - inefficient
+    - BatchGetItem - efficiently get multiple items from multiple tables (2 separate queries at once)
+- avoid KMS throttling with a "data key cache"
+- "elastic IP" is one that doesn't change across scaling
+- Amplify = static site hosting
+- S3 PER PREFIX perf - 3,500 PUT/COPY/POST/DELETE or 5,500 GET/HEAD req/s
+- IAM roles should be attached to ECS TASKS
+- x-ray GetTraceSummaries for finding request by attr
+- lambda event source mappings are for when lambda needs to poll aka no invokation
+    - so sqs, kinesis, dynamodb streams
+
+
 ## aws provided sample Qs - mine then correct
 D, B+E, A+E, B+C, A, D, B, D, D, D
 D, A+B, A+E, A+D, A, D, B, B, C, D
